@@ -1,13 +1,12 @@
 package reportes;
 
-import javax.swing.JOptionPane;
 import main.Main;
 
-public class BoletasPorEvento extends javax.swing.JFrame {
+public class BoletasPorCliente extends javax.swing.JFrame {
 
     private javax.swing.JLabel labelTitle;
     private javax.swing.JLabel nombreEvento;
-    private javax.swing.JComboBox<String> comboBoxEventos;
+    private javax.swing.JComboBox<String> comboBoxClientes;
 
     private javax.swing.JButton botonConsultar;
     private javax.swing.JButton botonMenu;
@@ -21,7 +20,7 @@ public class BoletasPorEvento extends javax.swing.JFrame {
     String ventas[][] = new String[100][5];
     int contadorVentas = 0;
 
-    public BoletasPorEvento() {
+    public BoletasPorCliente() {
         initComponents();
     }
 
@@ -35,15 +34,15 @@ public class BoletasPorEvento extends javax.swing.JFrame {
         this.ventas = ventas;
         this.contadorVentas = contadorVentas;
 
-        comboBoxEventos.setModel(new javax.swing.DefaultComboBoxModel<>(cargarComboBox()));
+        comboBoxClientes.setModel(new javax.swing.DefaultComboBoxModel<>(cargarComboBox()));
     }
 
     private String[] cargarComboBox() {
-        String[] listadoEventosCombo = new String[6];
-        for (int i = 0; i < eventos.length; i++) {
-            listadoEventosCombo[i] = eventos[i][1];
+        String[] listadoClientesCombo = new String[10];
+        for (int i = 0; i < clientes.length; i++) {
+            listadoClientesCombo[i] = clientes[i][1];
         }
-        return listadoEventosCombo;
+        return listadoClientesCombo;
     }
 
     private void initComponents() {
@@ -51,7 +50,7 @@ public class BoletasPorEvento extends javax.swing.JFrame {
         labelTitle = new javax.swing.JLabel();
 
         nombreEvento = new javax.swing.JLabel();
-        comboBoxEventos = new javax.swing.JComboBox<>();
+        comboBoxClientes = new javax.swing.JComboBox<>();
 
         botonConsultar = new javax.swing.JButton();
         botonMenu = new javax.swing.JButton();
@@ -59,9 +58,9 @@ public class BoletasPorEvento extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         labelTitle.setForeground(new java.awt.Color(255, 51, 51));
-        labelTitle.setText("Cantidad de boletas vendidas por evento");
+        labelTitle.setText("Cantidad de boletas por cliente");
 
-        nombreEvento.setText("Nombre evento");
+        nombreEvento.setText("Nombre Cliente");
 
         botonConsultar.setText("Consultar");
         botonConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +91,7 @@ public class BoletasPorEvento extends javax.swing.JFrame {
                                                         .addComponent(nombreEvento))
                                                 .addGap(18, 18, 18)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(comboBoxEventos, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)))
+                                                        .addComponent(comboBoxClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(89, 89, 89)
                                                 .addComponent(botonConsultar)
@@ -109,7 +108,7 @@ public class BoletasPorEvento extends javax.swing.JFrame {
                                 .addGap(35, 35, 35)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(nombreEvento)
-                                        .addComponent(comboBoxEventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(comboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(28, 28, 28)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(botonConsultar)
@@ -128,25 +127,31 @@ public class BoletasPorEvento extends javax.swing.JFrame {
     }
 
     private void actionConsultar(java.awt.event.ActionEvent evt) {
-        String[] eventoSelected = new String[5];
-        for (int i = 0; i < eventos.length; i++) {
-            if (eventos[i][1] != null) {
-                if (eventos[i][1].equals(String.valueOf(comboBoxEventos.getSelectedItem()))) {
-                    eventoSelected = eventos[i];
+        String[] clienteSelected = new String[4];
+        for (int i = 0; i < clientes.length; i++) {
+            if (clientes[i][1] != null) {
+                if (clientes[i][1].equals(String.valueOf(comboBoxClientes.getSelectedItem()))) {
+                    clienteSelected = clientes[i];
                 }
             }
         }
 
-        int cantidadTotal = 0;
+        String ventasCliente[][] = new String[100][5];
         for (int i = 0; i < ventas.length; i++) {
-            if (ventas[i][2] != null) {
-                if (ventas[i][2].equals(eventoSelected[0])) {
-                    cantidadTotal = cantidadTotal + Integer.valueOf(ventas[i][3]);
+            if (ventas[i][1] != null) {
+                if (ventas[i][1].equals(clienteSelected[0])) {
+                    ventasCliente[i] = ventas[i];
                 }
             }
-
         }
-        JOptionPane.showMessageDialog(null, "Boletos vendidos para el evento: " + eventoSelected[1] + " => " + String.valueOf(cantidadTotal));
+        
+        
+        ListadoEventosPorCliente listadoEventosPorCliente = new ListadoEventosPorCliente();
+        
+        listadoEventosPorCliente.cargarInfo(eventos, contadorEventos, clientes, contadorClientes, ventasCliente, contadorVentas);
+        
+        listadoEventosPorCliente.setVisible(true);
+        
 
     }
 

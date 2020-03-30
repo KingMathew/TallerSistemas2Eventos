@@ -19,8 +19,10 @@ public class Main extends javax.swing.JFrame {
     int contadorVentas = 0;
 
     public Main() {
-        eventos[0] = new String[]{"1002", "Concierto Mayor", "20-01-05", "10000", "30"};
+        /*eventos[0] = new String[]{"1002", "Concierto Mayor", "20-01-05", "10000", "30"};
+        eventos[1] = new String[]{"1515", "Partido futbol", "20-01-05", "10000", "300"};
         clientes[0] = new String[]{"1022430062", "Mateo Ortiz", "mat", "123"};
+        clientes[1] = new String[]{"54546565", "Santiago", "san", "123"};*/
         initComponents();
     }
 

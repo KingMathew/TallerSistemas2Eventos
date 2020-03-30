@@ -1,5 +1,9 @@
 package main;
 
+import javax.swing.JOptionPane;
+import reportes.BoletasPorCliente;
+import reportes.BoletasPorEvento;
+
 public class Reportes extends javax.swing.JFrame {
 
     private javax.swing.JButton botonBoletasPorEvento;
@@ -47,28 +51,28 @@ public class Reportes extends javax.swing.JFrame {
         botonBoletasPorEvento.setText("Boletas por evento");
         botonBoletasPorEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //actionCrearEspectaculo(evt);
+                actionBoletasPorEvento(evt);
             }
         });
 
         botonBoletasVendidas.setText("Total de boletas vendidas");
         botonBoletasVendidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //actionRegistrarCliente(evt);
+                actionTotalBoletasVendidas(evt);
             }
         });
 
         botonTotalVentas.setText("Total de ventas");
         botonTotalVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //actionRealizarVenta(evt);
+                actionTotalVentas(evt);
             }
         });
 
         botonBoletasPorCliente.setText("Boletas por cliente");
         botonBoletasPorCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //actionGenerarReporte(evt);
+                actionBoletasPorCliente(evt);
             }
         });
 
@@ -76,7 +80,7 @@ public class Reportes extends javax.swing.JFrame {
         botonMenu.setText("Menu");
         botonMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //actionExit(evt);
+                actionMenu(evt);
             }
         });
 
@@ -119,5 +123,48 @@ public class Reportes extends javax.swing.JFrame {
         );
 
         pack();
+    }
+    
+    private void actionMenu(java.awt.event.ActionEvent evt) {
+        Main main = new Main();
+        this.setVisible(false);
+        main.cargarInfo(eventos, contadorEventos, clientes, contadorClientes, ventas, contadorVentas);
+        main.setVisible(true);
+    }
+
+    private void actionBoletasPorEvento(java.awt.event.ActionEvent evt) {
+        BoletasPorEvento boletasPorEvento = new BoletasPorEvento();
+        this.setVisible(false);
+        boletasPorEvento.cargarInfo(eventos, contadorEventos, clientes, contadorClientes, ventas, contadorVentas);
+        boletasPorEvento.setVisible(true);
+    }
+
+    private void actionTotalBoletasVendidas(java.awt.event.ActionEvent evt) {
+        int cantidadTotal = 0;
+        for (int i = 0; i < ventas.length; i++) {
+            if (ventas[i][2] != null) {
+                cantidadTotal = cantidadTotal + Integer.valueOf(ventas[i][3]);
+            }
+
+        }
+        JOptionPane.showMessageDialog(null, "Total boletos vendidos todos los eventos => " + String.valueOf(cantidadTotal));
+
+    }
+
+    private void actionTotalVentas(java.awt.event.ActionEvent evt) {
+        int cantidadTotal = 0;
+        for (int i = 0; i < ventas.length; i++) {
+            if (ventas[i][4] != null) {
+                cantidadTotal = cantidadTotal + Integer.valueOf(ventas[i][4]);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Ventas totales => " + String.valueOf(cantidadTotal));
+    }
+
+    private void actionBoletasPorCliente(java.awt.event.ActionEvent evt) {
+        BoletasPorCliente boletasPorCliente = new BoletasPorCliente();
+        this.setVisible(false);
+        boletasPorCliente.cargarInfo(eventos, contadorEventos, clientes, contadorClientes, ventas, contadorVentas);
+        boletasPorCliente.setVisible(true);
     }
 }
